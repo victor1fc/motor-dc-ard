@@ -1,4 +1,4 @@
-/// ----> Controle PID <---- 
+// Controle de velocidade de motor DC com Controlador PID 
 
 #define sensor  10  //p2.2
 #define pwm_in     14  //p1.6
@@ -55,7 +55,6 @@ void loop() {
 
     }
 
-
     
     if (pulsos>=23) { // a cada 3 voltas
       detachInterrupt(digitalPinToInterrupt(sensor)); //desabilita interrupcao durante o calculo    
@@ -67,9 +66,7 @@ void loop() {
       Serial.print(PWM);      
       Serial.print("\t");
       Serial.println(rpm_med, DEC);     
-
-      
-   
+       
       pulsos=0;
       tempo= micros();
       
@@ -77,14 +74,9 @@ void loop() {
     rpm_med=((alfa*rpm_med)+(0.026708)*rpm); // media movel exponencial de 36 periodos  
    
     controle();     // chama funcao de controle
-    
-
-    
+      
     attachInterrupt(digitalPinToInterrupt(sensor), contador, RISING); 
-    
-   
-    
-  
+        
 }
 
 int   controle(){
@@ -101,10 +93,6 @@ int   controle(){
   dif_rpm=rpm_med-rpm_ant;   // calcula derivada do PV
   
   PWM = erro*Kp + int_erro*Ki - dif_rpm*Kd;
-
- 
-    
-    
   
     if(PWM > 255){
           PWM=255;
@@ -113,11 +101,9 @@ int   controle(){
          PWM=0;
          
     }
-      
+     
   
   rpm_ant= rpm_med;  // armazena em PV_ant o valor atual de PV
   analogWrite(pwm_in,255-PWM);
-  
-  
 
 }
