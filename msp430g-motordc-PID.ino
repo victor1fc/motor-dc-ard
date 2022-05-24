@@ -73,9 +73,9 @@ void loop() {
     }
     rpm_med=((alfa*rpm_med)+(0.026708)*rpm); // media movel exponencial de 36 periodos  
    
-    controle();     // chama funcao de controle
+    controle();     
       
-    attachInterrupt(digitalPinToInterrupt(sensor), contador, RISING); 
+    attachInterrupt(digitalPinToInterrupt(sensor), contador, RISING);  //Reabilita interrupcao durante o calculo 
         
 }
 
